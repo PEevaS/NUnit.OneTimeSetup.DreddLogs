@@ -2,7 +2,7 @@
 using System.Text;
 using NUnit.Framework.Internal;
 
-namespace NUnit.TestFixtureLogger.Exceptions
+namespace NUnit.OneTimeSetup.DreddLogs.Exceptions
 {
     public class FixtureSetupException : Exception
     {

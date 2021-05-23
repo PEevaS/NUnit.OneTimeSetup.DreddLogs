@@ -2,7 +2,7 @@
 using Serilog;
 using Serilog.Core;
 
-namespace NUnit.TestFixtureLogger.Tests
+namespace NUnit.OneTimeSetup.DreddLogs.Tests
 {
     public abstract class BaseTest
     {

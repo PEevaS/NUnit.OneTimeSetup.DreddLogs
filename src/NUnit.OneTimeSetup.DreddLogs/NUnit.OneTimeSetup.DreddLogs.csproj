@@ -2,7 +2,11 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
-    <RootNamespace>nunit_fixture_logger</RootNamespace>
+    <RootNamespace>NUnit.OneTimeSetup.DreddLogs</RootNamespace>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <Authors>Alex Shykelia</Authors>
+    <Company />
+    <AssemblyName>NUnit.OneTimeSetup.DreddLogs</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

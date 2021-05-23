@@ -4,6 +4,10 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
 
     <IsPackable>false</IsPackable>
+
+    <AssemblyName>NUnit.OneTimeSetup.DreddLogs.Tests</AssemblyName>
+
+    <RootNamespace>NUnit.OneTimeSetup.DreddLogs.Tests</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\NUnit.TestFixtureLogger\NUnit.TestFixtureLogger.csproj" />
+    <ProjectReference Include="..\..\src\NUnit.OneTimeSetup.DreddLogs\NUnit.OneTimeSetup.DreddLogs.csproj" />
   </ItemGroup>
 
 </Project>
