@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using NUnit.Framework;
 
-namespace NUnit.TestFixtureLogger.Tests
+namespace NUnit.TestFixtureLogger.Tests.TestsWithGlobalSetUp
 {
     [TestFixture]
     public class TestFixtureWithSynchronousNonStaticSetupMethod : BaseTest

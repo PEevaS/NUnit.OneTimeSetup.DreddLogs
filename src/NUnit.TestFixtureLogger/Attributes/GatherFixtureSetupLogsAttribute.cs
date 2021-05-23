@@ -7,10 +7,10 @@ using NUnit.TestFixtureLogger.Exceptions;
 
 namespace NUnit.TestFixtureLogger.Attributes
 {
-    [AttributeUsage(AttributeTargets.Class)]
+    [AttributeUsage(AttributeTargets.Assembly | AttributeTargets.Class)]
     [Aspect(Scope.Global)]
     [Injection(typeof(GatherFixtureSetupLogsAttribute))]
-    public class GatherFixtureSetupLogsAttribute : Attribute
+    public sealed class GatherFixtureSetupLogsAttribute : Attribute
     {
         [Advice(Kind.Around, Targets = Target.Method | Target.Public)]
         public object Handle(
@@ -20,14 +20,17 @@ namespace NUnit.TestFixtureLogger.Attributes
             [Argument(Source.ReturnType)] Type returnType)
         {
 
-            var isFixtureSetupMethod = IsFixtureSetupMethod(target.Method.ReflectedType, methodName);
+            if(IsFixtureSetupMethod(target.Method.ReflectedType, methodName) is false)
+            {
+                return target(args);
+            }
 
             if (IsAsyncMethod(returnType))
             {
-                return WrapAsync(target, args, isFixtureSetupMethod).GetAwaiter().GetResult();
+                return WrapAsync(target, args).GetAwaiter().GetResult();
             }
 
-            return Wrap(target, args, isFixtureSetupMethod);
+            return Wrap(target, args);
         }
 
         private bool IsFixtureSetupMethod(Type reflectedType, string methodName)
@@ -40,38 +43,28 @@ namespace NUnit.TestFixtureLogger.Attributes
             return typeof(Task).IsAssignableFrom(returnType);
         }
 
-        private object Wrap(Func<object[], object> target, object[] args, bool fixtureSetupMethod)
+        private object Wrap(Func<object[], object> target, object[] args)
         {
             try
             {
-                return target.Invoke(args);
+                return target(args);
             }
             catch (Exception e)
             {
-                if (fixtureSetupMethod)
-                {
-                    throw new FixtureSetupException(e);
-                }
-
-                throw;
+                throw new FixtureSetupException(e);
             }
         }
 
-        private async Task<object> WrapAsync(Func<object[], object> target, object[] args, bool fixtureSetupMethod)
+        private async Task<object> WrapAsync(Func<object[], object> target, object[] args)
         {
             try
             {
-                await (Task)target.Invoke(args);
-                return new object();
+                await (Task)target(args);
+                return Task.CompletedTask;
             }
             catch (Exception e)
             {
-                if (fixtureSetupMethod)
-                {
-                    throw new FixtureSetupException(e);
-                }
-
-                throw;
+                throw new FixtureSetupException(e);
             }
         }
     }

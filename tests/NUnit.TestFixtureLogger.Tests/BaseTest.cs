@@ -4,7 +4,7 @@ using Serilog.Core;
 
 namespace NUnit.TestFixtureLogger.Tests
 {
-    public class BaseTest
+    public abstract class BaseTest
     {
         protected static Logger Logger { get; private set; }
 
