@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30907.101
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NUnit.OneTimeSetup.DreddLogs", "src\NUnit.OneTimeSetup.DreddLogs\NUnit.OneTimeSetup.DreddLogs.csproj", "{74CF1FE1-BAA5-4FD5-B9BD-6894C5F08186}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NUnit.OneTimeSetup.DreddLogs.Tests", "tests\NUnit.OneTimeSetup.DreddLogs.Tests\NUnit.OneTimeSetup.DreddLogs.Tests.csproj", "{F299FE13-738A-416E-B612-5FD1466D303C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{74CF1FE1-BAA5-4FD5-B9BD-6894C5F08186}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74CF1FE1-BAA5-4FD5-B9BD-6894C5F08186}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74CF1FE1-BAA5-4FD5-B9BD-6894C5F08186}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74CF1FE1-BAA5-4FD5-B9BD-6894C5F08186}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F299FE13-738A-416E-B612-5FD1466D303C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F299FE13-738A-416E-B612-5FD1466D303C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F299FE13-738A-416E-B612-5FD1466D303C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F299FE13-738A-416E-B612-5FD1466D303C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {654C05CA-8171-4DC0-B5EF-0A6EEB1218E2}
+	EndGlobalSection
+EndGlobal

@@ -1,8 +1,8 @@
-﻿using NUnit.Framework;
+﻿using System;
+using NUnit.Framework;
 using Serilog;
-using System;
 
-namespace NUnit.TestFixtureLogger.Tests.TestsWithGlobalSetUp
+namespace NUnit.OneTimeSetup.DreddLogs.Tests.TestsWithGlobalSetUp
 {
     [SetUpFixture]
     public class GlobalSetup

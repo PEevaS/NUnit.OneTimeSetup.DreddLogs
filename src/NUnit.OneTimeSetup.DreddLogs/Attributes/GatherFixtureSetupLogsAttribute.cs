@@ -3,9 +3,9 @@ using System.Reflection;
 using System.Threading.Tasks;
 using AspectInjector.Broker;
 using NUnit.Framework;
-using NUnit.TestFixtureLogger.Exceptions;
+using NUnit.OneTimeSetup.DreddLogs.Exceptions;
 
-namespace NUnit.TestFixtureLogger.Attributes
+namespace NUnit.OneTimeSetup.DreddLogs.Attributes
 {
     [AttributeUsage(AttributeTargets.Assembly | AttributeTargets.Class)]
     [Aspect(Scope.Global)]
@@ -20,7 +20,7 @@ namespace NUnit.TestFixtureLogger.Attributes
             [Argument(Source.ReturnType)] Type returnType)
         {
 
-            if(IsFixtureSetupMethod(target.Method.ReflectedType, methodName) is false)
+            if (IsFixtureSetupMethod(target.Method.ReflectedType, methodName) is false)
             {
                 return target(args);
             }
