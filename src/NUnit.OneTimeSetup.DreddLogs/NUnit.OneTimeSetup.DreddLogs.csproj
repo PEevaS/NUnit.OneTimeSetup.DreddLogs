@@ -1,14 +1,16 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <RootNamespace>NUnit.OneTimeSetup.DreddLogs</RootNamespace>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <Authors>alexsanv, gray-oni</Authors>
-    <Company />
+    <Authors>Alex Shykelia (alexsanv), Sergey K (gray-oni)</Authors>
     <AssemblyName>NUnit.OneTimeSetup.DreddLogs</AssemblyName>
     <PackageProjectUrl>https://github.com/alexsanv/NUnit.OneTimeSetup.DreddLogs</PackageProjectUrl>
     <RepositoryUrl>https://github.com/alexsanv/NUnit.OneTimeSetup.DreddLogs</RepositoryUrl>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <Description>Helper library for NUnit that allows you to show all the logs that happened during test fixture setup (OneTimeSetup)</Description>
+    <Version>1.0.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -18,6 +20,13 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="NUnit" Version="3.13.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
