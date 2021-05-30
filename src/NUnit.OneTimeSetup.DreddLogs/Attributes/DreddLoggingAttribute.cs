@@ -9,8 +9,8 @@ namespace NUnit.OneTimeSetup.DreddLogs.Attributes
 {
     [AttributeUsage(AttributeTargets.Assembly | AttributeTargets.Class)]
     [Aspect(Scope.Global)]
-    [Injection(typeof(GatherFixtureSetupLogsAttribute))]
-    public sealed class GatherFixtureSetupLogsAttribute : Attribute
+    [Injection(typeof(DreddLoggingAttribute))]
+    public sealed class DreddLoggingAttribute : Attribute
     {
         [Advice(Kind.Around, Targets = Target.Method | Target.Public)]
         public object Handle(
