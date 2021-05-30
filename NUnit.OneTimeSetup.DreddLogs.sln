@@ -10,7 +10,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C5966C88-D000-4AC1-9E70-939096038A90}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
-		.github\workflows\dotnet.yml = .github\workflows\dotnet.yml
+		.github\workflows\build.yml = .github\workflows\build.yml
+		.github\workflows\publish_package.yml = .github\workflows\publish_package.yml
 	EndProjectSection
 EndProject
 Global
