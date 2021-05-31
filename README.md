@@ -1,4 +1,6 @@
 # NUnit.OneTimeSetup.DreddLogs
+[![build](https://github.com/alexsanv/NUnit.OneTimeSetup.DreddLogs/actions/workflows/build.yml/badge.svg)](https://github.com/alexsanv/NUnit.OneTimeSetup.DreddLogs/actions/workflows/build.yml)
+[![nuget](https://buildstats.info/nuget/NUnit.OneTimeSetup.DreddLogs)](https://www.nuget.org/packages/NUnit.OneTimeSetup.DreddLogs/)
 
 Helper library for NUnit that allows you to show all the logs that happened during test fixture setup (OneTimeSetup). Uses [aspect-injector](https://github.com/pamidur/aspect-injector)
 
@@ -39,4 +41,12 @@ That's it.
 ## Limitations and known issues
 
 - DreddLogging attribute does not work with inheritance. If you have some base fixture class and all other fixture classes are inherited from it, and you specify [DreddLogging] atribute in base class then it's functionality won't be inherited in derived classes. Known issue of aspect-injector - [#101](https://github.com/pamidur/aspect-injector/issues/101).
+- Stack trace contains names of wrapper methods produced by [aspect-injector](https://github.com/pamidur/aspect-injector) rather than original method names e.g. ***__a$_around_OneTimeSetup_100663307_o*** in the following stack trace:
+```
+ System.Exception: <original exception's message>
+       at NUnit.OneTimeSetup.DreddLogs.Tests.TestFixtureWithSynchronousStaticSetupMethod.__a$_around_OneTimeSetup_100663307_o() in D:\Workspace\nunit-fixture-logger\tests\NUnit.OneTimeSetup.DreddLogs.Tests\TestFixtureWithSynchronousNonStaticSetupMethod.cs:line 29
+       at NUnit.OneTimeSetup.DreddLogs.Tests.TestFixtureWithSynchronousStaticSetupMethod.__a$_around_OneTimeSetup_100663307_u(Object[] )
+       at NUnit.OneTimeSetup.DreddLogs.Attributes.DreddLoggingAttribute.Wrap(Func`2 target, Object[] args) in D:\Workspace\nunit-fixture-logger\src\NUnit.OneTimeSetup.DreddLogs\Attributes\DreddLoggingAttribute.cs:line 50
+
+```
 - For all others, refer to [aspect-injector](https://github.com/pamidur/aspect-injector)
