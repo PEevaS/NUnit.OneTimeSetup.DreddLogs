@@ -2,7 +2,7 @@
 using NUnit.Framework;
 using Serilog;
 
-namespace NUnit.OneTimeSetup.DreddLogs.Tests.TestsWithGlobalSetUp
+namespace NUnit.OneTimeSetup.DreddLogs.Tests.Internal.WithGlobalSetup
 {
     [SetUpFixture]
     public class GlobalSetup
