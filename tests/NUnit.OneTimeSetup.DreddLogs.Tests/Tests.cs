@@ -22,6 +22,7 @@ namespace NUnit.OneTimeSetup.DreddLogs.Tests
         public void SimpleTest()
         {
             var testCaseCount = _testRunner.CountTestCases(TestFilter.Empty);
+            testCaseCount.Should().BeGreaterThan(0);
 
             var xmlReport = _testRunner.Run(null, TestFilter.Empty);
             var testCaseNodes = xmlReport.SelectNodes("//test-case");
@@ -34,13 +35,13 @@ namespace NUnit.OneTimeSetup.DreddLogs.Tests
                 {
                     var xmlNode = testCaseNode as XmlNode;
 
-                    var isFailed = xmlNode.SelectSingleNode("./failure") != null;
+                    var isFailed = xmlNode.SelectSingleNode("./failure") is not null;
                     isFailed.Should().BeTrue();
 
                     var message = xmlNode.SelectSingleNode("./failure/message").InnerText;
-                    message.Should().Contain("NUnit.OneTimeSetup.DreddLogs.Exceptions.FixtureSetupException : Exception was thrown in fixture setup");
-                    message.Should().Contain("Previous logs");
-                    message.Should().Contain("----> System.Exception");
+                    message.Should().Contain("NUnit.OneTimeSetup.DreddLogs.Exceptions.FixtureSetupException : Exception was thrown in fixture setup")
+                                    .And.Contain("Previous logs")
+                                    .And.Contain("----> System.Exception");
                 }
             }
         }
