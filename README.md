@@ -49,4 +49,6 @@ That's it.
        at NUnit.OneTimeSetup.DreddLogs.Attributes.DreddLoggingAttribute.Wrap(Func`2 target, Object[] args) in D:\Workspace\nunit-fixture-logger\src\NUnit.OneTimeSetup.DreddLogs\Attributes\DreddLoggingAttribute.cs:line 50
 
 ```
+Related issues: [#156](https://github.com/pamidur/aspect-injector/issues/156)
+
 - For all others, refer to [aspect-injector](https://github.com/pamidur/aspect-injector)
