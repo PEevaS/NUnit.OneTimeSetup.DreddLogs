@@ -10,9 +10,16 @@ namespace NUnit.OneTimeSetup.DreddLogs.Tests
     {
         [TestCase("hello")]
         [TestCase("world")]
-        public void ParameterizedTest(string str)
+        [TestCase(null)]
+        public void CallOverloadedMethodWithParameters(string str)
         {
             OverloadedMethod(str);
+        }
+
+        [Test]
+        public void CallOverloadedMethodWithoutParameters()
+        {
+            OverloadedMethod();
         }
 
         public void OverloadedMethod()

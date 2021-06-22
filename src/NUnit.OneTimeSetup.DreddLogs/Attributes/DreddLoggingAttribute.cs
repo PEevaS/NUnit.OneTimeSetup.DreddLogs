@@ -36,8 +36,12 @@ namespace NUnit.OneTimeSetup.DreddLogs.Attributes
 
         private bool IsFixtureSetupMethod(Type reflectedType, string methodName, object[] parameters)
         {
-            var types = parameters.Select(p => p.GetType()).ToArray();
-            return reflectedType.GetMethod(methodName, types).GetCustomAttribute<OneTimeSetUpAttribute>() != null;
+            if (parameters.Count() == 0)
+            {
+                return reflectedType.GetMethod(methodName, Array.Empty<Type>()).GetCustomAttribute<OneTimeSetUpAttribute>() != null;
+            }
+
+            return false;
         }
 
         private bool IsAsyncMethod(Type returnType)
