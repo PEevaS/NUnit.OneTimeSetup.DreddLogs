@@ -7,7 +7,7 @@ using NUnit.Framework;
 namespace NUnit.OneTimeSetup.DreddLogs.Tests
 {
     [TestFixture]
-    public class Tests
+    public class NUnitTestResultTests
     {
         private ITestRunner _testRunner;
 
