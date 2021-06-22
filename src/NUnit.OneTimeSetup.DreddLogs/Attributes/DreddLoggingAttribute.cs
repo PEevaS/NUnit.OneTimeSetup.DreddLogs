@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using AspectInjector.Broker;
@@ -20,7 +21,7 @@ namespace NUnit.OneTimeSetup.DreddLogs.Attributes
             [Argument(Source.ReturnType)] Type returnType)
         {
 
-            if (IsFixtureSetupMethod(target.Method.ReflectedType, methodName) is false)
+            if (IsFixtureSetupMethod(target.Method.ReflectedType, methodName, args) is false)
             {
                 return target(args);
             }
@@ -33,9 +34,10 @@ namespace NUnit.OneTimeSetup.DreddLogs.Attributes
             return Wrap(target, args);
         }
 
-        private bool IsFixtureSetupMethod(Type reflectedType, string methodName)
+        private bool IsFixtureSetupMethod(Type reflectedType, string methodName, object[] parameters)
         {
-            return reflectedType.GetMethod(methodName).GetCustomAttribute<OneTimeSetUpAttribute>() != null;
+            var types = parameters.Select(p => p.GetType()).ToArray();
+            return reflectedType.GetMethod(methodName, types).GetCustomAttribute<OneTimeSetUpAttribute>() != null;
         }
 
         private bool IsAsyncMethod(Type returnType)
