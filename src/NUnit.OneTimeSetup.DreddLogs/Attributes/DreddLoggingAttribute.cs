@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using AspectInjector.Broker;
@@ -20,7 +21,7 @@ namespace NUnit.OneTimeSetup.DreddLogs.Attributes
             [Argument(Source.ReturnType)] Type returnType)
         {
 
-            if (IsFixtureSetupMethod(target.Method.ReflectedType, methodName) is false)
+            if (IsFixtureSetupMethod(target.Method.ReflectedType, methodName, args) is false)
             {
                 return target(args);
             }
@@ -33,9 +34,42 @@ namespace NUnit.OneTimeSetup.DreddLogs.Attributes
             return Wrap(target, args);
         }
 
-        private bool IsFixtureSetupMethod(Type reflectedType, string methodName)
+        private bool IsFixtureSetupMethod(Type reflectedType, string methodName, object[] parameters)
         {
-            return reflectedType.GetMethod(methodName).GetCustomAttribute<OneTimeSetUpAttribute>() != null;
+            var methodInfo = FindMethod(reflectedType, methodName, parameters);
+            return methodInfo.GetCustomAttribute<OneTimeSetUpAttribute>() != null;
+        }
+
+        private MethodInfo FindMethod(Type reflectedType, string methodName, object[] parameters)
+        {
+            var methods = reflectedType.GetMethods()
+                .Where(m => m.Name == methodName)
+                .ToList();
+
+            if (methods.Count() == 1)
+            {
+                return methods.First();
+            }
+
+            return methods.First(m =>
+            {
+                var methodParameters = m.GetParameters();
+
+                if (methodParameters.Count() == parameters.Count())
+                {
+                    for (int i = 0; i < methodParameters.Length; i++)
+                    {
+                        if (methodParameters[i].ParameterType != parameters[i].GetType())
+                        {
+                            return false;
+                        }
+                    }
+
+                    return true;
+                }
+
+                return false;
+            });
         }
 
         private bool IsAsyncMethod(Type returnType)
