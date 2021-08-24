@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Text;
+using System.Text.RegularExpressions;
 using NUnit.Framework.Internal;
+using NUnit.OneTimeSetup.DreddLogs.Attributes;
 
 namespace NUnit.OneTimeSetup.DreddLogs.Exceptions
 {
@@ -17,13 +19,40 @@ namespace NUnit.OneTimeSetup.DreddLogs.Exceptions
                 var sb = new StringBuilder();
 
                 sb.AppendLine(base.Message)
-                  .AppendLine(InnerException.ToString())
+                  .AppendLine($"{InnerException.GetType().FullName}: {InnerException.Message}")
+                  .AppendLine(GetPurifiedInnerExceptionStacktrace())
                   .AppendLine()
                   .AppendLine("Previous logs:")
-                  .AppendLine(TestExecutionContext.CurrentContext.CurrentResult.Output);
+                  .Append(TestExecutionContext.CurrentContext.CurrentResult.Output);
 
                 return sb.ToString();
             }
+        }
+
+        private string GetPurifiedInnerExceptionStacktrace()
+        {
+            var sb = new StringBuilder();
+
+            sb.AppendLine(PurifyStacktrace(InnerException.StackTrace))
+              .Append(PurifyStacktrace(StackTrace));
+
+            return sb.ToString();
+        }
+
+        private string PurifyStacktrace(string stackTrace)
+        {
+            var sb = new StringBuilder();
+
+            var lines = stackTrace.Split(Environment.NewLine);
+            foreach (var line in lines)
+            {
+                if (!string.IsNullOrEmpty(line) && !line.Contains("$_around") && !line.Contains(typeof(DreddLoggingAttribute).FullName))
+                {
+                    sb.AppendLine(line);
+                }
+            }
+
+            return sb.ToString().TrimEnd(Environment.NewLine.ToCharArray());
         }
     }
 }

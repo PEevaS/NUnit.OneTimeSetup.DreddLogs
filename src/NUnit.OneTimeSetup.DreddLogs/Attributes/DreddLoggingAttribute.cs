@@ -55,7 +55,7 @@ namespace NUnit.OneTimeSetup.DreddLogs.Attributes
             {
                 return target(args);
             }
-            catch (Exception e)
+            catch (Exception e) when (!typeof(ResultStateException).IsAssignableFrom(e.GetType()))
             {
                 throw new FixtureSetupException(e);
             }

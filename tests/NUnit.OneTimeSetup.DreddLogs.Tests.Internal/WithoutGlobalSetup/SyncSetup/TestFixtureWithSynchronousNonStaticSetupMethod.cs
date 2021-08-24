@@ -11,11 +11,16 @@ namespace NUnit.OneTimeSetup.DreddLogs.Internal.Tests.WithoutGlobalSetup.SyncSet
         public void OneTimeSetup()
         {
             Logger.Information($"{nameof(OneTimeSetup)} of {nameof(TestFixtureWithSynchronousNonStaticSetupMethod)}");
-            throw new Exception("Synchronous non-static fixture setup method");
+            ThrowException();
         }
 
         [Test]
         public void Test()
         { }
+
+        private void ThrowException()
+        {
+            throw new Exception("Synchronous non-static fixture setup method");
+        }
     }
 }
