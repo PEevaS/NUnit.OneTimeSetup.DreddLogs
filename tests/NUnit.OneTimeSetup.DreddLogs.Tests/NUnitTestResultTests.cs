@@ -3,6 +3,7 @@ using FluentAssertions;
 using FluentAssertions.Execution;
 using NUnit.Engine;
 using NUnit.Framework;
+using NUnit.OneTimeSetup.DreddLogs.Tests.Internal;
 
 namespace NUnit.OneTimeSetup.DreddLogs.Tests
 {
@@ -19,12 +20,15 @@ namespace NUnit.OneTimeSetup.DreddLogs.Tests
         }
 
         [Test]
-        public void SimpleTest()
+        public void ExceptionsThrownInFixtureSetup_ShouldBeWrappedByFixtureSetupException()
         {
-            var testCaseCount = _testRunner.CountTestCases(TestFilter.Empty);
+            var testFilterXml = $@"<filter><not><class>{typeof(IgnoreInOneTimeSetupTests).FullName}</class></not></filter>";
+            var filter = new TestFilter(testFilterXml);
+
+            var testCaseCount = _testRunner.CountTestCases(filter);
             testCaseCount.Should().BeGreaterThan(0);
 
-            var xmlReport = _testRunner.Run(null, TestFilter.Empty);
+            var xmlReport = _testRunner.Run(null, filter);
             var testCaseNodes = xmlReport.SelectNodes("//test-case");
 
             using (new AssertionScope())
@@ -42,6 +46,26 @@ namespace NUnit.OneTimeSetup.DreddLogs.Tests
                     message.Should().Contain("NUnit.OneTimeSetup.DreddLogs.Exceptions.FixtureSetupException : Exception was thrown in fixture setup")
                                     .And.Contain("Previous logs")
                                     .And.Contain("----> System.Exception");
+                }
+            }
+        }
+
+        [Test]
+        public void NunitResultStateExceptionsShouldNotBeCaught()
+        {
+            var testFilterXml = $@"<filter><class>{typeof(IgnoreInOneTimeSetupTests).FullName}</class></filter>";
+            var filter = new TestFilter(testFilterXml);
+
+            var xmlReport = _testRunner.Run(null, filter);
+            var testCaseNodes = xmlReport.SelectNodes("//test-case");
+
+            using (new AssertionScope())
+            {
+                foreach (var testCaseNode in testCaseNodes)
+                {
+                    var xmlNode = testCaseNode as XmlNode;
+                    var testCaseResult = xmlNode.Attributes["result"];
+                    testCaseResult.Value.Should().Be("Skipped");
                 }
             }
         }
