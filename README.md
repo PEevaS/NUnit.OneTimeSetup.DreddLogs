@@ -1,4 +1,5 @@
 # NUnit.OneTimeSetup.DreddLogs
+
 [![build](https://github.com/alexsanv/NUnit.OneTimeSetup.DreddLogs/actions/workflows/build.yml/badge.svg)](https://github.com/alexsanv/NUnit.OneTimeSetup.DreddLogs/actions/workflows/build.yml)
 [![nuget](https://buildstats.info/nuget/NUnit.OneTimeSetup.DreddLogs)](https://www.nuget.org/packages/NUnit.OneTimeSetup.DreddLogs/)
 
@@ -20,16 +21,14 @@ exception's stacktrace and all the preceding logs. E.g.:
 
 ```
 OneTimeSetUp: NUnit.OneTimeSetup.DreddLogs.Exceptions.FixtureSetupException : Exception was thrown in fixture setup
-    System.Exception: <original exception's message>
-       at NUnit.OneTimeSetup.DreddLogs.Tests.TestFixtureWithSynchronousStaticSetupMethod.__a$_around_OneTimeSetup_100663307_o() in D:\Workspace\nunit-fixture-logger\tests\NUnit.OneTimeSetup.DreddLogs.Tests\TestFixtureWithSynchronousNonStaticSetupMethod.cs:line 29
-       at NUnit.OneTimeSetup.DreddLogs.Tests.TestFixtureWithSynchronousStaticSetupMethod.__a$_around_OneTimeSetup_100663307_u(Object[] )
-       at NUnit.OneTimeSetup.DreddLogs.Attributes.DreddLoggingAttribute.Wrap(Func`2 target, Object[] args) in D:\Workspace\nunit-fixture-logger\src\NUnit.OneTimeSetup.DreddLogs\Attributes\DreddLoggingAttribute.cs:line 50
+    System.Exception: Synchronous non-static fixture setup method
+       at NUnit.OneTimeSetup.DreddLogs.Internal.Tests.WithoutGlobalSetup.SyncSetup.TestFixtureWithSynchronousNonStaticSetupMethod.ThrowException() in D:\Tools\NUnit.OneTimeSetup.DreddLogs\tests\NUnit.OneTimeSetup.DreddLogs.Tests.Internal\WithoutGlobalSetup\SyncSetup\TestFixtureWithSynchronousNonStaticSetupMethod.cs:line 23
+       at NUnit.OneTimeSetup.DreddLogs.Internal.Tests.WithoutGlobalSetup.SyncSetup.TestFixtureWithSynchronousNonStaticSetupMethod.OneTimeSetup()
 
     Previous logs:
-    [21:32:02 INF] OneTimeSetup of TestFixtureWithSynchronousStaticSetupMethod
+    [19:31:24 INF] OneTimeSetup of TestFixtureWithSynchronousNonStaticSetupMethod
 
-
-      ----> System.Exception : Synchronous static fixture setup method
+      ----> System.Exception : Synchronous non-static fixture setup method
 ```
 
 ## How to use
@@ -41,14 +40,5 @@ That's it.
 ## Limitations and known issues
 
 - DreddLogging attribute does not work with inheritance. If you have some base fixture class and all other fixture classes are inherited from it, and you specify [DreddLogging] atribute in base class then it's functionality won't be inherited in derived classes. Known issue of aspect-injector - [#101](https://github.com/pamidur/aspect-injector/issues/101).
-- Stack trace contains names of wrapper methods produced by [aspect-injector](https://github.com/pamidur/aspect-injector) rather than original method names e.g. ***__a$_around_OneTimeSetup_100663307_o*** in the following stack trace:
-```
- System.Exception: <original exception's message>
-       at NUnit.OneTimeSetup.DreddLogs.Tests.TestFixtureWithSynchronousStaticSetupMethod.__a$_around_OneTimeSetup_100663307_o() in D:\Workspace\nunit-fixture-logger\tests\NUnit.OneTimeSetup.DreddLogs.Tests\TestFixtureWithSynchronousNonStaticSetupMethod.cs:line 29
-       at NUnit.OneTimeSetup.DreddLogs.Tests.TestFixtureWithSynchronousStaticSetupMethod.__a$_around_OneTimeSetup_100663307_u(Object[] )
-       at NUnit.OneTimeSetup.DreddLogs.Attributes.DreddLoggingAttribute.Wrap(Func`2 target, Object[] args) in D:\Workspace\nunit-fixture-logger\src\NUnit.OneTimeSetup.DreddLogs\Attributes\DreddLoggingAttribute.cs:line 50
-
-```
-Related issues: [#156](https://github.com/pamidur/aspect-injector/issues/156)
 
 - For all others, refer to [aspect-injector](https://github.com/pamidur/aspect-injector)
