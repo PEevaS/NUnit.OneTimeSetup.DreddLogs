@@ -47,8 +47,6 @@ namespace NUnit.OneTimeSetup.DreddLogs.Tests
                     var isFailed = xmlNode.SelectSingleNode("./failure") is not null;
                     isFailed.Should().BeTrue();
 
-                    var exName = nameof(FixtureSetupException);
-
                     var message = xmlNode.SelectSingleNode("./failure/message").InnerText;
                     message.Should().Contain($"{fixtureSetupExceptionFullName} : Exception was thrown in fixture setup")
                                     .And.Contain("Previous logs")
