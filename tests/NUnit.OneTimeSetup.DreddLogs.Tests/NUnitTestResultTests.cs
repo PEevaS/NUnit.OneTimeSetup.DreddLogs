@@ -3,6 +3,8 @@ using FluentAssertions;
 using FluentAssertions.Execution;
 using NUnit.Engine;
 using NUnit.Framework;
+using NUnit.OneTimeSetup.DreddLogs.Attributes;
+using NUnit.OneTimeSetup.DreddLogs.Exceptions;
 using NUnit.OneTimeSetup.DreddLogs.Tests.Internal;
 
 namespace NUnit.OneTimeSetup.DreddLogs.Tests
@@ -35,6 +37,9 @@ namespace NUnit.OneTimeSetup.DreddLogs.Tests
             {
                 testCaseNodes.Count.Should().Be(testCaseCount);
 
+                var fixtureSetupExceptionFullName = typeof(FixtureSetupException).FullName;
+                var dreddLoggingAttributeFullName = typeof(DreddLoggingAttribute).FullName;
+
                 foreach (var testCaseNode in testCaseNodes)
                 {
                     var xmlNode = testCaseNode as XmlNode;
@@ -42,10 +47,13 @@ namespace NUnit.OneTimeSetup.DreddLogs.Tests
                     var isFailed = xmlNode.SelectSingleNode("./failure") is not null;
                     isFailed.Should().BeTrue();
 
+                    var exName = nameof(FixtureSetupException);
+
                     var message = xmlNode.SelectSingleNode("./failure/message").InnerText;
-                    message.Should().Contain("NUnit.OneTimeSetup.DreddLogs.Exceptions.FixtureSetupException : Exception was thrown in fixture setup")
+                    message.Should().Contain($"{fixtureSetupExceptionFullName} : Exception was thrown in fixture setup")
                                     .And.Contain("Previous logs")
-                                    .And.Contain("----> System.Exception");
+                                    .And.Contain("----> System.Exception")
+                                    .And.NotContain($"{dreddLoggingAttributeFullName}");
                 }
             }
         }
